@@ -1,32 +1,32 @@
-# CustomWindow (Dear PyGui 框架)
+# CustomWindow (Dear PyGui Framework)
 
-自訂無邊框視窗的桌面應用程式框架，基於 Dear PyGui。提供：
-- 自訂標題列（icon、標題文字、最小化/最大化/關閉）
-- 無邊框視窗拖曳與四邊/角落縮放覆蓋層
-- Windows API 游標切換與視窗控制（在非 Windows 上使用 DPG 退化行為）
-- 事件集中在 `UIEvent` 類，使用者介面透過 `UserUI` 組合進 `UIHandle`
+A desktop application framework for a custom borderless window, built on Dear PyGui. It provides:
+- Custom title bar (icon, title text, minimize/maximize/close)
+- Borderless window dragging with edge/corner resize overlay
+- Windows API cursor switching and window controls (fallback to Dear PyGui behaviors on non‑Windows)
+- Centralized event handling in the `UIEvent` class; user UI is composed via `UserUI` into `UIHandle`
 
-## 安裝
+## Installation
 
-以 pip 安裝依賴（建議使用虛擬環境）：
+Install dependencies with pip (virtual environment recommended):
 
 ```bash
 pip install -r requirement.txt
-# 或
+# or
 pip install dearpygui
 ```
 
-## 執行
+## Run
 
-直接啟動框架預設視窗：
+Start the default window provided by the framework:
 
 ```bash
 python CustomWindow.py
 ```
 
-## 自訂 UI（組合 `UserUI`）
+## Customize UI (compose `UserUI`)
 
-建立自己的 `UserUI` 子類，並在 `UIHandle` 初始化後替換：
+Create your own `UserUI` subclass and replace it after initializing `UIHandle`:
 
 ```python
 from CustomWindow import UIHandle, UserUI, dpg
@@ -38,41 +38,40 @@ class MyUserUI(UserUI):
 
     def resize_callback(self, sender, app_data):
         vw, vh = dpg.get_viewport_width(), dpg.get_viewport_height()
-        # 依視窗大小調整你的元件尺寸
+        # Adjust your components based on viewport size
         # dpg.configure_item("my_panel", width=vw - 100)
 
     def update_logic(self):
-        # 每幀更新邏輯（例如狀態顯示）
+        # Per‑frame update logic (e.g., status display)
         pass
 
 if __name__ == "__main__":
     ui = UIHandle()
-    ui.user_ui = MyUserUI(ui)  # 以組合方式替換使用者介面
+    ui.user_ui = MyUserUI(ui)  # Replace the user interface via composition
     ui.loop()
 ```
 
-## 重要設定
+## Important Settings
 
-- `CUSTOMWINDOW_DEBUG`：開啟後會顯示縮放邊界與按鈕 hover/active 顏色，便於除錯。
-- 視窗佈局：預設主內容 `content_window` 會自動避開標題列與縮放邊距。
+- `CUSTOMWINDOW_DEBUG`: When enabled, shows resize boundaries and button hover/active colors to aid debugging.
+- Layout behavior: The default main content window `content_window` automatically avoids the title bar and resize margins.
 
-## 平台說明
+## Platform Notes
 
-- Windows：使用 WinAPI 控制（最小化/最大化/游標切換），提供最佳體驗。
-- 其他平台：退化為 Dear PyGui 的預設控制；無邊框與縮放互動仍可運作，但某些行為可能不同。
+- Windows: Uses WinAPI for controls (minimize/maximize/cursor switching) and offers the best experience.
+- Other platforms: Falls back to Dear PyGui's default controls; borderless and resize interactions still work, though some behaviors may differ.
 
-## 專案結構（摘要）
+## Project Structure (summary)
 
 ```
-CustomWindow.py        # 框架主檔，包含 UIHandle / UIEvent / ResizeOverlay / CustomWindowBar / UserUI
-demo.py                # 範例或測試（若存在）
-fonts/                 # 字型資源（可選）
-icon/                  # 視窗 icon 圖示（可選）
-images/                # 圖片資源（可選）
-Resources/Resource.drawio
+CustomWindow.py        # Main framework file with UIHandle / UIEvent / ResizeOverlay / CustomWindowBar / UserUI
+fonts/                 # Font assets (optional)
+icon/                  # Window icon assets (optional)
+images/                # Image assets (optional)
+resources/Resource.drawio
 ```
 
-## 開發提示
+## Development Tips
 
-- 若需要自訂標題列或縮放覆蓋層的樣式/尺寸，可調整 `CUSTOMWINDOW_TITLEBAR_HEIGHT` 與 `ResizeOverlay.bar_w`。
-- 想整合更多事件：請在 `UIEvent` 類中新增方法，並於佈局綁定對應的 handler。
+- To customize the style/size of the title bar or resize overlay, adjust `CUSTOMWINDOW_TITLEBAR_HEIGHT` and `ResizeOverlay.bar_w`.
+- To integrate more events, add methods in the `UIEvent` class and bind corresponding handlers in your layout.
