@@ -1,10 +1,17 @@
 # CustomWindow (Dear PyGui Framework)
-
 A desktop application framework for a custom borderless window, built on Dear PyGui. It provides:
 - Custom title bar (icon, title text, minimize/maximize/close)
 - Borderless window dragging with edge/corner resize overlay
 - Windows API cursor switching and window controls (fallback to Dear PyGui behaviors on non‑Windows)
 - Centralized event handling in the `UIEvent` class; user UI is composed via `UserUI` into `UIHandle`
+
+
+## Demo
+| Original windows window bar | CustomWindow (This Project) |
+|------------------------|----------------------------------|
+| <img width="400" height="318" alt="image" src="https://github.com/user-attachments/assets/428a1bf8-4c19-40f6-b665-4582c847ba27" /> | <img width="400" height="300" alt="image" src="https://github.com/user-attachments/assets/cecf16ac-593a-4220-9ac5-126e316e26ae" /> |  
+
+https://github.com/user-attachments/assets/c598ef13-f0e7-4a8c-a0b0-214e3a8fca89
 
 ## Why
 Since Dear PyGui currently lacks a simple, mature custom window bar solution on Windows, I built one for future development.   
@@ -104,4 +111,5 @@ resources/Resource.drawio
 
 - To customize the style/size of the title bar or resize overlay, adjust `CUSTOMWINDOW_TITLEBAR_HEIGHT` and `ResizeOverlay.bar_w`.
 - To integrate more events, add methods in the `UIEvent` class and bind corresponding handlers in your layout.
+
 
